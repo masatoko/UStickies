@@ -57,3 +57,9 @@ Do NOT write or edit any code until the plan is approved.
 ## git commit 規約
 
 - 言語は英語とする
+
+## git push 規約
+
+- `git push` は、ユーザーから明示的な許可を得た場合にのみ実行する。
+- コミットやタグ作成の許可を、pushの許可として扱わない。
+- 実行直前に、pushするブランチとタグを提示して確認を取る。
