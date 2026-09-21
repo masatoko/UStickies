@@ -31,8 +31,6 @@ Runtimeでの利用は想定していない。ノートデータとEditor機能�
 
 このリポジトリでは、パッケージが `Packages/com.tenkaigames.ustickies` に格納されている。Git URLから追加する場合は、URLに `?path=/Packages/com.tenkaigames.ustickies` を指定する。
 
-以下の `<repository-url>` は、実際のGitリポジトリURLへ置き換える。
-
 ## Package Managerから追加
 
 1. Unityの `Window > Package Manager` を開く
@@ -41,13 +39,7 @@ Runtimeでの利用は想定していない。ノートデータとEditor機能�
 4. 次のURLを入力する
 
 ```text
-<repository-url>?path=/Packages/com.tenkaigames.ustickies
-```
-
-例:
-
-```text
-https://github.com/owner/UStickies.git?path=/Packages/com.tenkaigames.ustickies
+https://github.com/masatoko/UStickies.git?path=/Packages/com.tenkaigames.ustickies
 ```
 
 ## manifest.jsonへ直接追加
@@ -57,7 +49,7 @@ https://github.com/owner/UStickies.git?path=/Packages/com.tenkaigames.ustickies
 ```json
 {
   "dependencies": {
-    "com.tenkaigames.ustickies": "<repository-url>?path=/Packages/com.tenkaigames.ustickies"
+    "com.tenkaigames.ustickies": "https://github.com/masatoko/UStickies.git?path=/Packages/com.tenkaigames.ustickies"
   }
 }
 ```
@@ -69,7 +61,7 @@ https://github.com/owner/UStickies.git?path=/Packages/com.tenkaigames.ustickies
 特定バージョンへ固定する場合は、URL末尾にGitタグまたはコミットハッシュを指定する。
 
 ```text
-<repository-url>?path=/Packages/com.tenkaigames.ustickies#v0.1.0
+https://github.com/masatoko/UStickies.git?path=/Packages/com.tenkaigames.ustickies#v0.1.0
 ```
 
 更新による意図しない挙動変更を避けるため、共同開発や継続運用ではバージョンの固定を推奨する。
