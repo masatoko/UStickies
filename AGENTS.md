@@ -57,7 +57,3 @@ Do NOT write or edit any code until the plan is approved.
 ## git commit 規約
 
 - 言語は英語とする
-
-## パッケージ運用
-
-- 初期バージョンが完成するまでは `Packages/com.tenkaigames.ustickies/CHANGELOG.md` を空に保つ。
