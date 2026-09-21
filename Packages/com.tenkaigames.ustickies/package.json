@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "displayName": "UStickies",
   "description": "Scene上に付箋形式のメモを配置・管理するためのUnity Editor拡張。",
+  "license": "MIT",
   "unity": "6000.3",
   "keywords": [
     "editor",
