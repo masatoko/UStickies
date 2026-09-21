@@ -1,0 +1,105 @@
+:root {
+    --ustickies-accent: rgb(68, 151, 230);
+    --ustickies-danger: rgb(218, 78, 72);
+    --ustickies-radius: 3px;
+}
+
+.ustickies-dark {
+    --ustickies-surface: rgb(45, 45, 45);
+    --ustickies-surface-raised: rgb(54, 54, 54);
+    --ustickies-border: rgb(72, 72, 72);
+    --ustickies-hover: rgb(62, 62, 62);
+    --ustickies-selected: rgb(48, 69, 88);
+    --ustickies-text-muted: rgb(167, 167, 167);
+}
+
+.ustickies-light {
+    --ustickies-surface: rgb(210, 210, 210);
+    --ustickies-surface-raised: rgb(225, 225, 225);
+    --ustickies-border: rgb(174, 174, 174);
+    --ustickies-hover: rgb(232, 232, 232);
+    --ustickies-selected: rgb(181, 211, 235);
+    --ustickies-text-muted: rgb(84, 84, 84);
+}
+
+.ustickies-root {
+    flex-grow: 1;
+    background-color: var(--ustickies-surface);
+}
+
+.ustickies-toolbar {
+    flex-direction: row;
+    align-items: center;
+    min-height: 30px;
+    padding: 3px 5px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--ustickies-border);
+    background-color: var(--ustickies-surface-raised);
+}
+
+.ustickies-panel {
+    margin: 8px;
+    padding: 10px;
+    border-width: 1px;
+    border-color: var(--ustickies-border);
+    border-radius: var(--ustickies-radius);
+    background-color: var(--ustickies-surface-raised);
+}
+
+.ustickies-row {
+    margin: 2px 5px;
+    padding: 7px 8px;
+    border-left-width: 3px;
+    border-left-color: transparent;
+    border-radius: var(--ustickies-radius);
+    background-color: var(--ustickies-surface-raised);
+}
+
+.ustickies-row:hover {
+    background-color: var(--ustickies-hover);
+}
+
+.ustickies-row--selected {
+    border-left-color: var(--ustickies-accent);
+    background-color: var(--ustickies-selected);
+}
+
+.ustickies-row--done {
+    opacity: 0.58;
+}
+
+.ustickies-muted {
+    color: var(--ustickies-text-muted);
+    font-size: 11px;
+}
+
+.ustickies-spacer {
+    flex-grow: 1;
+}
+
+.ustickies-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 9px;
+}
+
+.ustickies-primary {
+    border-color: var(--ustickies-accent);
+    background-color: var(--ustickies-accent);
+    color: white;
+}
+
+.ustickies-danger {
+    color: var(--ustickies-danger);
+}
+
+Button, .unity-base-field__input {
+    border-radius: var(--ustickies-radius);
+}
+
+Button {
+    min-height: 22px;
+    margin-left: 3px;
+    margin-right: 3px;
+    background-image: none;
+}

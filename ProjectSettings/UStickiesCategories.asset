@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 53
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e72ea9223ac44b8b4e937ac7cfd84c8, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Tenkai.UStickies.Editor::Tenkai.UStickies.UStickiesProjectSettings
+  _categories:
+  - _id: ustickies.category.note
+    _label: Note
+    _color: {r: 0.65, g: 0.65, b: 0.65, a: 1}
+    _builtIn: 1
+  - _id: ustickies.category.todo
+    _label: Todo
+    _color: {r: 0.95, g: 0.72, b: 0.18, a: 1}
+    _builtIn: 1
+  - _id: ustickies.category.bug
+    _label: Bug
+    _color: {r: 0.9, g: 0.25, b: 0.23, a: 1}
+    _builtIn: 1
+  _replacements: []
