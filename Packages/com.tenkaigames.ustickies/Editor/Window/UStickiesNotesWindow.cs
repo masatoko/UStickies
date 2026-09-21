@@ -16,9 +16,9 @@ namespace Tenkai.UStickies
     /// </summary>
     internal sealed class UStickiesNotesWindow : EditorWindow
     {
-        [SerializeField] private int _selectedSceneHandle;
+        [SerializeField] private SceneHandle _selectedSceneHandle;
 
-        private readonly List<int> _sceneHandles = new();
+        private readonly List<SceneHandle> _sceneHandles = new();
         private DropdownField _sceneField;
         private ToolbarSearchField _searchField;
         private ToolbarMenu _categoryMenu;

@@ -5,6 +5,7 @@
 ### Changed
 
 - Unity 6000.3と6000.6の対応状況をREADMEに明記
+- Scene識別子を`SceneHandle`で保持し、Unity 6000.6に対応
 
 ## [0.1.0] - 2026-09-21
 

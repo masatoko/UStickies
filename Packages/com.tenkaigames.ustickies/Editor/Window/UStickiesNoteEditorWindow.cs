@@ -13,7 +13,7 @@ namespace Tenkai.UStickies
     /// </summary>
     internal sealed class UStickiesNoteEditorWindow : EditorWindow
     {
-        [SerializeField] private int _sceneHandle;
+        [SerializeField] private SceneHandle _sceneHandle;
         [SerializeField] private string _noteId;
         [SerializeField] private bool _isNew;
         [SerializeField] private bool _saved;
@@ -177,7 +177,7 @@ namespace Tenkai.UStickies
             return scene.IsValid() && note != null;
         }
 
-        private static Scene FindScene(int handle)
+        private static Scene FindScene(SceneHandle handle)
         {
             for (var index = 0; index < SceneManager.sceneCount; index++)
             {
