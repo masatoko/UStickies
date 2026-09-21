@@ -22,8 +22,14 @@ Sceneに初めてノートを追加すると、Scene直下に非表示の管理�
 
 # 動作環境
 
-- Unity 6000.3以降
 - Unity Editor専用
+
+| Gitタグ  | パッケージバージョン | Unityバージョン | 対応状況             |
+| -------- | -------------------- | --------------- | -------------------- |
+| `v0.1.1` | `0.1.1`              | 6000.3          | 動作確認済み         |
+| `v0.1.1` | `0.1.1`              | 6000.6          | 未対応（エラーあり） |
+
+Unity 6000.3では `v0.1.1` の利用を推奨する。Unity 6000.6への対応状況は、今後のバージョンで更新する。
 
 Runtimeでの利用は想定していない。ノートデータとEditor機能は、ビルド後のプレイヤーには含まれない。
 
@@ -61,7 +67,7 @@ https://github.com/masatoko/UStickies.git?path=/Packages/com.tenkaigames.usticki
 特定バージョンへ固定する場合は、URL末尾にGitタグまたはコミットハッシュを指定する。
 
 ```text
-https://github.com/masatoko/UStickies.git?path=/Packages/com.tenkaigames.ustickies#v0.1.0
+https://github.com/masatoko/UStickies.git?path=/Packages/com.tenkaigames.ustickies#v0.1.1
 ```
 
 更新による意図しない挙動変更を避けるため、共同開発や継続運用ではバージョンの固定を推奨する。
