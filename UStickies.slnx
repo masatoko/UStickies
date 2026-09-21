@@ -1,2 +1,5 @@
 ﻿<Solution>
+  <Project Path="Tenkai.UStickies.Data.csproj" />
+  <Project Path="Tenkai.UStickies.Editor.csproj" />
+  <Project Path="Tenkai.UStickies.Editor.Tests.csproj" />
 </Solution>
