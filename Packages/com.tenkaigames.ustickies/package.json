@@ -1,6 +1,6 @@
 {
   "name": "com.tenkaigames.ustickies",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "displayName": "UStickies",
   "description": "Scene上に付箋形式のメモを配置・管理するためのUnity Editor拡張。",
   "license": "MIT",

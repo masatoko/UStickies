@@ -26,10 +26,10 @@ Sceneに初めてノートを追加すると、Scene直下に非表示の管理�
 
 | Gitタグ  | パッケージバージョン | Unityバージョン | 対応状況     |
 | -------- | -------------------- | --------------- | ------------ |
-| `v0.1.2` | `0.1.2`              | 6000.3          | 対応         |
-| `v0.1.2` | `0.1.2`              | 6000.6          | 動作確認済み |
+| `v0.2.0` | `0.2.0`              | 6000.3          | 対応         |
+| `v0.2.0` | `0.2.0`              | 6000.6          | 動作確認済み |
 
-Unity 6000.3および6000.6では `v0.1.2` の利用を推奨する。
+Unity 6000.3および6000.6では `v0.2.0` の利用を推奨する。
 
 Runtimeでの利用は想定していない。ノートデータとEditor機能は、ビルド後のプレイヤーには含まれない。
 
@@ -67,7 +67,7 @@ https://github.com/masatoko/UStickies.git?path=/Packages/com.tenkaigames.usticki
 特定バージョンへ固定する場合は、URL末尾にGitタグまたはコミットハッシュを指定する。
 
 ```text
-https://github.com/masatoko/UStickies.git?path=/Packages/com.tenkaigames.ustickies#v0.1.2
+https://github.com/masatoko/UStickies.git?path=/Packages/com.tenkaigames.ustickies#v0.2.0
 ```
 
 更新による意図しない挙動変更を避けるため、共同開発や継続運用ではバージョンの固定を推奨する。
