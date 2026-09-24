@@ -15,8 +15,11 @@ namespace Tenkai.UStickies
     internal static class UStickiesSceneViewController
     {
         private const float IconSize = 28f;
-        private const float CardWidth = 280f;
+        private const float CardMaximumWidth = 280f;
         private const float CardMaximumHeight = 220f;
+        private const float CardPadding = 6f;
+        private const float ScrollbarWidth = 16f;
+        private const float CardBackgroundAlpha = 0.35f;
 
         private static readonly Dictionary<string, Vector2> CardScrollPositions = new();
         private static readonly Dictionary<string, Rect> LastCardRects = new();
@@ -209,10 +212,35 @@ namespace Tenkai.UStickies
         {
             var bodyStyle = new GUIStyle(EditorStyles.label) { wordWrap = true };
             var text = string.IsNullOrEmpty(note.body) ? "空のノート" : note.body;
-            var bodyHeight = Mathf.Max(rect.height, bodyStyle.CalcHeight(new GUIContent(text), rect.width - 16f));
+            var content = new GUIContent(text);
+            var categoryColor = UStickiesProjectSettings.instance.Resolve(note.categoryId).color;
+            EditorGUI.DrawRect(
+                rect,
+                new Color(categoryColor.r, categoryColor.g, categoryColor.b, CardBackgroundAlpha));
+
+            var viewportRect = new Rect(
+                rect.x + CardPadding,
+                rect.y + CardPadding,
+                rect.width - CardPadding * 2f,
+                rect.height - CardPadding * 2f);
+            var bodyHeight = bodyStyle.CalcHeight(content, viewportRect.width);
+            if (bodyHeight <= viewportRect.height)
+            {
+                GUI.Label(viewportRect, content, bodyStyle);
+                CardScrollPositions[note.id] = Vector2.zero;
+                return;
+            }
+
+            var bodyWidth = viewportRect.width - ScrollbarWidth;
+            bodyHeight = bodyStyle.CalcHeight(content, bodyWidth);
             var scroll = CardScrollPositions.TryGetValue(note.id, out var savedScroll) ? savedScroll : Vector2.zero;
-            scroll = GUI.BeginScrollView(rect, scroll, new Rect(0f, 0f, rect.width - 16f, bodyHeight));
-            GUI.Label(new Rect(0f, 0f, rect.width - 16f, bodyHeight), text, bodyStyle);
+            scroll = GUI.BeginScrollView(
+                viewportRect,
+                scroll,
+                new Rect(0f, 0f, bodyWidth, bodyHeight),
+                false,
+                true);
+            GUI.Label(new Rect(0f, 0f, bodyWidth, bodyHeight), content, bodyStyle);
             GUI.EndScrollView();
             CardScrollPositions[note.id] = scroll;
         }
@@ -222,11 +250,18 @@ namespace Tenkai.UStickies
         /// </summary>
         private static Rect FindCardRect(Rect iconRect, SceneNote note)
         {
-            var bodyStyle = new GUIStyle(EditorStyles.label) { wordWrap = true };
+            var measurementStyle = new GUIStyle(EditorStyles.label) { wordWrap = false };
             var text = string.IsNullOrEmpty(note.body) ? "空のノート" : note.body;
-            var height = Mathf.Clamp(bodyStyle.CalcHeight(new GUIContent(text), CardWidth - 16f), 18f, CardMaximumHeight);
+            var content = new GUIContent(text);
+            var width = Mathf.Min(
+                measurementStyle.CalcSize(content).x + CardPadding * 2f,
+                CardMaximumWidth);
+            var bodyStyle = new GUIStyle(measurementStyle) { wordWrap = true };
+            var height = Mathf.Min(
+                bodyStyle.CalcHeight(content, width - CardPadding * 2f) + CardPadding * 2f,
+                CardMaximumHeight);
             const float gap = 14f;
-            return new Rect(iconRect.xMax + gap, iconRect.yMin, CardWidth, height);
+            return new Rect(iconRect.xMax + gap, iconRect.yMin, width, height);
         }
 
         private static void BeginDrag(SceneView sceneView, SceneNoteEntry entry, Vector2 mousePosition)
