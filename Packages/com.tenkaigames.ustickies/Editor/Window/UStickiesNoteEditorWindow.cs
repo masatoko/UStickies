@@ -70,7 +70,13 @@ namespace Tenkai.UStickies
             {
                 value = note.viewOffset
             };
-            panel.Add(_viewOffsetField);
+            _viewOffsetField.style.flexGrow = 1f;
+
+            var viewOffsetRow = new VisualElement();
+            viewOffsetRow.style.flexDirection = FlexDirection.Row;
+            viewOffsetRow.Add(_viewOffsetField);
+            viewOffsetRow.Add(new Button(() => _viewOffsetField.value = Vector2.zero) { text = "Reset" });
+            panel.Add(viewOffsetRow);
 
             if (!_isNew)
             {

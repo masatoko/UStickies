@@ -102,6 +102,7 @@ Unity Editor上で、Scene内の任意位置またはGameObjectにノートを�
 - GameObjectの紐づけ先
 
 新規作成時と既存ノートの編集時の両方で、Scene View上の表示オフセットを編集できる。
+表示オフセット欄の `Reset` で入力値をゼロへ戻せる。変更はSave時に確定する。
 
 別SceneのGameObjectは紐づけ先に指定できない。
 

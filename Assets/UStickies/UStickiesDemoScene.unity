@@ -176,7 +176,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 514404453}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
@@ -228,7 +228,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -481,8 +481,9 @@ MonoBehaviour:
     _body: "\u30C6\u30B9\u30C8"
     _categoryId: ustickies.category.todo
     _done: 0
-    _pinned: 0
+    _pinned: 1
     _worldPosition: {x: -12.41763, y: -0, z: -10.8139}
+    _viewOffset: {x: 0, y: 0}
     _target: {fileID: 382466942}
     _isBound: 1
     _missingTargetNotified: 0
@@ -492,8 +493,9 @@ MonoBehaviour:
     _body: Position note
     _categoryId: ustickies.category.note
     _done: 0
-    _pinned: 0
+    _pinned: 1
     _worldPosition: {x: -21.174307, y: 3.400842, z: -21.891396}
+    _viewOffset: {x: 0, y: 0}
     _target: {fileID: 0}
     _isBound: 0
     _missingTargetNotified: 0

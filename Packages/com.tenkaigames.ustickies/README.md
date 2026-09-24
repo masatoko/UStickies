@@ -132,7 +132,7 @@ Scene View上で `Shift + 左ドラッグ` すると位置を変更できる。
   既存ノートの編集Windowを開き、`GameObject` を変更して保存する。同じSceneに属するGameObjectだけを指定できる。指定を解除すると位置固定ノートになる。
 
 - **表示位置のオフセットを数値で変更**
-  編集Windowの `View Offset` を変更する。Xは右方向、Yは下方向へのScene View上のずれを表す。
+  編集Windowの `View Offset` を変更する。Xは右方向、Yは下方向へのScene View上のずれを表す。`Reset` を押すと入力値がゼロへ戻り、`Save` で確定する。
 
 ## Scene View上の操作
 
