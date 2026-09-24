@@ -107,10 +107,12 @@
 - 常時表示がONのノートは、非選択時にも内容カードを表示する。
 - 内容はアイコンの右側へ固定して表示する。
 - Scene View外へはみ出す場合も位置を補正しない。
-- 背景、枠線、カテゴリ色の帯、アイコンとの接続線は表示しない。
+- カテゴリ色の半透明背景を表示し、枠線、カテゴリ色の帯、アイコンとの接続線は表示しない。
 - 複数の内容表示が重なっても、自動配置しない。
 - 選択中ノートのカードは最前面へ表示する。
-- カードには最大サイズを設け、長文はカード内スクロールで全文を表示する。
+- カードは本文に合わせて伸縮し、ユーザー設定の最大横幅で折り返す。
+- ユーザー設定の最大縦幅を超える長文は、カード内スクロールで全文を表示する。
+- 文字色はUnity標準色を初期状態とし、ユーザー設定で任意の色へ変更できる。
 
 ## ノート表示全体の切り替え
 
@@ -221,12 +223,13 @@
 - ユーザーが選択したSceneを維持し、UnityのアクティブScene変更には自動追従しない。
 - 選択中Sceneが閉じられた場合だけ、UnityのアクティブSceneへ切り替える。
 
-## Categories Window
+## UStickies Project Settings
 
 ### 開き方
 
-- Unity上部メニューの `Window > UStickies > Categories` から開く。
-- Notes Windowとは独立してドッキング可能なEditorWindowとする。
+- `Edit > Project Settings > UStickies` から開く。
+- ユーザーごとの内容カード表示設定と、プロジェクト共有のカテゴリ設定を同じ画面にまとめる。
+- 内容カード表示設定はProject Settings画面から操作するが、保存先は `UserSettings` とする。
 
 ### 編集操作
 
@@ -248,6 +251,7 @@
 - `Scene Viewにも適用` の状態
 - 一覧の並び順
 - ノート表示全体のON/OFF
+- Scene View上の内容カードの最大横幅、最大縦幅、文字色
 
 ## 未確定事項
 
@@ -260,7 +264,7 @@
 
 ## UIデザイン
 
-- Notes Window、Categories Window、編集WindowはUI Toolkitで構築する。
+- Notes Window、UStickies Project Settings、編集WindowはUI Toolkitで構築する。
 - Window UIはUSSでフラットデザインを適用する。
 - UnityのLightテーマとDarkテーマへ追従する。
 - Scene View上のワールド座標を扱う表示と操作にはIMGUIとHandlesを使用する。

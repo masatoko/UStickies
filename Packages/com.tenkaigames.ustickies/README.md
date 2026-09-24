@@ -163,16 +163,16 @@ Scene View上で `Shift + 左ドラッグ` すると位置を変更できる。
 
 ## カテゴリの管理
 
-カテゴリはプロジェクト全体で共有される。`Window > UStickies > Categories` からCategories Windowを開く。
+カテゴリはプロジェクト全体で共有される。`Edit > Project Settings > UStickies` から設定画面を開く。
 
 - **カテゴリを追加**
-  Categories Windowの追加ボタンを押す。
+  `Categories` の追加ボタンを押す。
 
 - **カテゴリの名前と色を変更**
-  Categories Windowで対象カテゴリのラベルまたは色を編集する。変更後もカテゴリIDは維持される。
+  `Categories` で対象カテゴリのラベルまたは色を編集する。変更後もカテゴリIDは維持される。
 
 - **カテゴリを並べ替え**
-  Categories Windowでカテゴリを並べ替える。Notes Windowの `Category` 順もこの表示順に従う。
+  `Categories` でカテゴリを並べ替える。Notes Windowの `Category` 順もこの表示順に従う。
 
 - **使用中のカテゴリを削除**
   追加したカテゴリの `Delete` を押し、そのカテゴリを使用中のノートに適用する置き換え先を選択する。組み込みカテゴリの `Note`、`Todo`、`Bug` は削除できない。

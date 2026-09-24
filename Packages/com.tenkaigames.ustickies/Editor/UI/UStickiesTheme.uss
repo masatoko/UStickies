@@ -83,6 +83,36 @@
     margin-top: 9px;
 }
 
+.ustickies-settings {
+    padding: 4px;
+}
+
+.ustickies-settings-categories {
+    flex-grow: 1;
+    min-height: 220px;
+}
+
+.ustickies-settings-header {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.ustickies-settings-title {
+    -unity-font-style: bold;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.ustickies-settings-header > .ustickies-settings-title {
+    margin-bottom: 0;
+}
+
+.ustickies-settings-category-list {
+    flex-grow: 1;
+    margin-top: 5px;
+}
+
 .ustickies-primary {
     border-color: var(--ustickies-accent);
     background-color: var(--ustickies-accent);

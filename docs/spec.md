@@ -211,12 +211,15 @@ Done状態は並び順に影響しない。
 - `Apply to Scene`
 - 並び順
 - ノート表示全体のON/OFF
+- Scene View上の内容カードの最大横幅、最大縦幅、文字色
 
-## Categories Window
+## Project Settings
 
-`Window > UStickies > Categories` から開く。
+`Edit > Project Settings > UStickies` から開く。
 
+- Scene View上の内容カードの最大横幅、最大縦幅、文字色を設定する。値はユーザーごとに保存する。
 - カテゴリの追加、名称変更、色変更、並べ替え、削除を行う。
+- カテゴリ設定はプロジェクト全体で共有する。
 - 使用中カテゴリの削除時は置き換え先カテゴリを選択する。
 
 ## Undo

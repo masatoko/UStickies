@@ -15,8 +15,6 @@ namespace Tenkai.UStickies
     internal static class UStickiesSceneViewController
     {
         private const float IconSize = 28f;
-        private const float CardMaximumWidth = 280f;
-        private const float CardMaximumHeight = 220f;
         private const float CardPadding = 6f;
         private const float ScrollbarWidth = 16f;
         private const float CardBackgroundAlpha = 0.35f;
@@ -211,6 +209,12 @@ namespace Tenkai.UStickies
         private static void DrawCard(Rect rect, SceneNote note)
         {
             var bodyStyle = new GUIStyle(EditorStyles.label) { wordWrap = true };
+            var settings = UStickiesUserSettings.instance;
+            if (settings.useCustomCardTextColor)
+            {
+                ApplyTextColor(bodyStyle, settings.cardTextColor);
+            }
+
             var text = string.IsNullOrEmpty(note.body) ? "空のノート" : note.body;
             var content = new GUIContent(text);
             var categoryColor = UStickiesProjectSettings.instance.Resolve(note.categoryId).color;
@@ -246,6 +250,21 @@ namespace Tenkai.UStickies
         }
 
         /// <summary>
+        /// 操作状態によって文字色が変わらないように、すべてのGUIStyleStateへ同じ色を設定する。
+        /// </summary>
+        private static void ApplyTextColor(GUIStyle style, Color color)
+        {
+            style.normal.textColor = color;
+            style.hover.textColor = color;
+            style.active.textColor = color;
+            style.focused.textColor = color;
+            style.onNormal.textColor = color;
+            style.onHover.textColor = color;
+            style.onActive.textColor = color;
+            style.onFocused.textColor = color;
+        }
+
+        /// <summary>
         /// 内容表示をアイコンの右側に固定する。
         /// </summary>
         private static Rect FindCardRect(Rect iconRect, SceneNote note)
@@ -255,11 +274,11 @@ namespace Tenkai.UStickies
             var content = new GUIContent(text);
             var width = Mathf.Min(
                 measurementStyle.CalcSize(content).x + CardPadding * 2f,
-                CardMaximumWidth);
+                UStickiesUserSettings.instance.cardMaximumWidth);
             var bodyStyle = new GUIStyle(measurementStyle) { wordWrap = true };
             var height = Mathf.Min(
                 bodyStyle.CalcHeight(content, width - CardPadding * 2f) + CardPadding * 2f,
-                CardMaximumHeight);
+                UStickiesUserSettings.instance.cardMaximumHeight);
             const float gap = 14f;
             return new Rect(iconRect.xMax + gap, iconRect.yMin, width, height);
         }
