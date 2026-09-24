@@ -17,6 +17,8 @@ namespace Tenkai.UStickies
         private readonly FloatField _maximumHeightField;
         private readonly Toggle _useCustomTextColorToggle;
         private readonly ColorField _textColorField;
+        private readonly Toggle _useCustomFontSizeToggle;
+        private readonly IntegerField _fontSizeField;
         private readonly Toggle _useCustomBackgroundColorToggle;
         private readonly ColorField _backgroundColorField;
         private readonly Slider _backgroundOpacityField;
@@ -70,6 +72,26 @@ namespace Tenkai.UStickies
             appearancePanel.Add(_textColorField);
 
             var projectSettings = UStickiesProjectSettings.instance;
+            _useCustomFontSizeToggle = new Toggle("Use Custom Font Size")
+            {
+                value = projectSettings.useCustomCardFontSize
+            };
+            _useCustomFontSizeToggle.RegisterValueChangedCallback(evt =>
+            {
+                _fontSizeField.SetEnabled(evt.newValue);
+                SaveCardFontAppearance();
+            });
+            appearancePanel.Add(_useCustomFontSizeToggle);
+
+            _fontSizeField = new IntegerField("Font Size")
+            {
+                isDelayed = true,
+                value = projectSettings.cardFontSize
+            };
+            _fontSizeField.SetEnabled(projectSettings.useCustomCardFontSize);
+            _fontSizeField.RegisterValueChangedCallback(_ => SaveCardFontAppearance());
+            appearancePanel.Add(_fontSizeField);
+
             _useCustomBackgroundColorToggle = new Toggle("Use Custom Sticky Color")
             {
                 value = projectSettings.useCustomCardBackgroundColor
@@ -101,7 +123,8 @@ namespace Tenkai.UStickies
             var limits = new HelpBox(
                 $"Width: {UStickiesUserSettings.MinimumCardWidth:0}-{UStickiesUserSettings.MaximumCardWidthLimit:0} px, "
                 + $"Height: {UStickiesUserSettings.MinimumCardHeight:0}-{UStickiesUserSettings.MaximumCardHeightLimit:0} px. "
-                + "Size and text color are stored per user. Sticky color and opacity are shared with the project.",
+                + $"Font size: {UStickiesProjectSettings.MinimumCardFontSize}-{UStickiesProjectSettings.MaximumCardFontSize} px. "
+                + "Card size and text color are stored per user. Font size, sticky color, and opacity are shared with the project.",
                 HelpBoxMessageType.Info);
             appearancePanel.Add(limits);
             Add(appearancePanel);
@@ -204,6 +227,22 @@ namespace Tenkai.UStickies
             _backgroundColorField.SetValueWithoutNotify(settings.cardBackgroundColor);
             _backgroundColorField.SetEnabled(settings.useCustomCardBackgroundColor);
             _backgroundOpacityField.SetValueWithoutNotify(settings.cardBackgroundOpacity);
+        }
+
+        private void SaveCardFontAppearance()
+        {
+            UStickiesProjectSettings.instance.SetCardFontAppearance(
+                _useCustomFontSizeToggle.value,
+                _fontSizeField.value);
+            RefreshCardFontAppearance();
+        }
+
+        private void RefreshCardFontAppearance()
+        {
+            var settings = UStickiesProjectSettings.instance;
+            _useCustomFontSizeToggle.SetValueWithoutNotify(settings.useCustomCardFontSize);
+            _fontSizeField.SetValueWithoutNotify(settings.cardFontSize);
+            _fontSizeField.SetEnabled(settings.useCustomCardFontSize);
         }
 
         private VisualElement MakeCategoryRow()
@@ -315,6 +354,7 @@ namespace Tenkai.UStickies
         private void RefreshProjectSettings()
         {
             RefreshCardBackgroundAppearance();
+            RefreshCardFontAppearance();
             RefreshCategories();
         }
     }

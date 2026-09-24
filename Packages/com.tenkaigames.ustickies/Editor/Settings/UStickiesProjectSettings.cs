@@ -16,6 +16,9 @@ namespace Tenkai.UStickies
         public const string TodoCategoryId = "ustickies.category.todo";
         public const string BugCategoryId = "ustickies.category.bug";
         public const float DefaultCardBackgroundOpacity = 0.35f;
+        public const int DefaultCardFontSize = 12;
+        public const int MinimumCardFontSize = 8;
+        public const int MaximumCardFontSize = 48;
 
         [SerializeField] private List<UStickiesCategory> _categories = new();
         [SerializeField] private List<UStickiesCategoryReplacement> _replacements = new();
@@ -23,6 +26,9 @@ namespace Tenkai.UStickies
         [SerializeField] private Color _cardBackgroundColor = Color.white;
         [SerializeField] private float _cardBackgroundOpacity;
         [SerializeField] private bool _hasCardBackgroundOpacity;
+        [SerializeField] private bool _useCustomCardFontSize;
+        [SerializeField] private int _cardFontSize = DefaultCardFontSize;
+        [SerializeField] private bool _hasCardFontSize;
 
         public static event Action changed;
 
@@ -46,6 +52,10 @@ namespace Tenkai.UStickies
         public float cardBackgroundOpacity => _hasCardBackgroundOpacity
             ? Mathf.Clamp01(_cardBackgroundOpacity)
             : DefaultCardBackgroundOpacity;
+        public bool useCustomCardFontSize => _useCustomCardFontSize;
+        public int cardFontSize => _hasCardFontSize
+            ? Mathf.Clamp(_cardFontSize, MinimumCardFontSize, MaximumCardFontSize)
+            : DefaultCardFontSize;
 
         public UStickiesCategory Resolve(string categoryId)
         {
@@ -139,6 +149,18 @@ namespace Tenkai.UStickies
             _cardBackgroundColor = new Color(color.r, color.g, color.b, 1f);
             _cardBackgroundOpacity = Mathf.Clamp01(opacity);
             _hasCardBackgroundOpacity = true;
+            EditorUtility.SetDirty(this);
+            Save(true);
+            changed?.Invoke();
+            SceneNoteMutationService.NotifyViewChanged();
+        }
+
+        public void SetCardFontAppearance(bool useCustomFontSize, int fontSize)
+        {
+            Undo.RecordObject(this, "Edit UStickies Card Font");
+            _useCustomCardFontSize = useCustomFontSize;
+            _cardFontSize = Mathf.Clamp(fontSize, MinimumCardFontSize, MaximumCardFontSize);
+            _hasCardFontSize = true;
             EditorUtility.SetDirty(this);
             Save(true);
             changed?.Invoke();

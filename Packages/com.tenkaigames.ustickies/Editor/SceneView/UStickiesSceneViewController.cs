@@ -207,7 +207,7 @@ namespace Tenkai.UStickies
 
         private static void DrawCard(Rect rect, SceneNote note)
         {
-            var bodyStyle = new GUIStyle(EditorStyles.label) { wordWrap = true };
+            var bodyStyle = CreateBodyStyle(true);
             var settings = UStickiesUserSettings.instance;
             if (settings.useCustomCardTextColor)
             {
@@ -272,11 +272,26 @@ namespace Tenkai.UStickies
         }
 
         /// <summary>
+        /// Project Settingsの文字サイズを反映した本文用スタイルを作成する。
+        /// </summary>
+        private static GUIStyle CreateBodyStyle(bool wordWrap)
+        {
+            var style = new GUIStyle(EditorStyles.label) { wordWrap = wordWrap };
+            var settings = UStickiesProjectSettings.instance;
+            if (settings.useCustomCardFontSize)
+            {
+                style.fontSize = settings.cardFontSize;
+            }
+
+            return style;
+        }
+
+        /// <summary>
         /// 内容表示をアイコンの右側に固定する。
         /// </summary>
         private static Rect FindCardRect(Rect iconRect, SceneNote note)
         {
-            var measurementStyle = new GUIStyle(EditorStyles.label) { wordWrap = false };
+            var measurementStyle = CreateBodyStyle(false);
             var text = string.IsNullOrEmpty(note.body) ? "空のノート" : note.body;
             var content = new GUIContent(text);
             var width = Mathf.Min(

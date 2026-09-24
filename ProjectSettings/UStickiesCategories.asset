@@ -28,5 +28,8 @@ MonoBehaviour:
   _replacements: []
   _useCustomCardBackgroundColor: 1
   _cardBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
-  _cardBackgroundOpacity: 0.186
+  _cardBackgroundOpacity: 0.143
   _hasCardBackgroundOpacity: 1
+  _useCustomCardFontSize: 0
+  _cardFontSize: 12
+  _hasCardFontSize: 1
