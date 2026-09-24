@@ -17,6 +17,7 @@ namespace Tenkai.UStickies.Tests
             Assert.That(note.position, Is.EqualTo(position));
             Assert.That(note.registrationOrder, Is.EqualTo(7L));
             Assert.That(note.isBound, Is.False);
+            Assert.That(note.viewOffset, Is.EqualTo(Vector2.zero));
         }
 
         [Test]
@@ -28,11 +29,23 @@ namespace Tenkai.UStickies.Tests
 
             try
             {
-                note.Apply(new SceneNoteEdit("body", UStickiesProjectSettings.TodoCategoryId, false, false, target));
+                note.Apply(new SceneNoteEdit(
+                    "body",
+                    UStickiesProjectSettings.TodoCategoryId,
+                    false,
+                    false,
+                    target,
+                    Vector2.zero));
                 Assert.That(note.isBound, Is.True);
                 Assert.That(note.position, Is.EqualTo(target.transform.position));
 
-                note.Apply(new SceneNoteEdit("body", UStickiesProjectSettings.TodoCategoryId, false, false, null));
+                note.Apply(new SceneNoteEdit(
+                    "body",
+                    UStickiesProjectSettings.TodoCategoryId,
+                    false,
+                    false,
+                    null,
+                    Vector2.zero));
                 Assert.That(note.isBound, Is.False);
                 Assert.That(note.position, Is.EqualTo(target.transform.position));
             }
@@ -40,6 +53,25 @@ namespace Tenkai.UStickies.Tests
             {
                 Object.DestroyImmediate(target);
             }
+        }
+
+        [Test]
+        public void ApplyViewOffset_StoresOffsetWithoutChangingWorldPosition()
+        {
+            var position = new Vector3(1f, 2f, 3f);
+            var offset = new Vector2(24f, -12f);
+            var note = SceneNote.Create(position, null, UStickiesProjectSettings.NoteCategoryId, 0L);
+
+            note.Apply(new SceneNoteEdit(
+                "body",
+                UStickiesProjectSettings.NoteCategoryId,
+                false,
+                false,
+                null,
+                offset));
+
+            Assert.That(note.position, Is.EqualTo(position));
+            Assert.That(note.viewOffset, Is.EqualTo(offset));
         }
 
         [Test]

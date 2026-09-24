@@ -172,6 +172,21 @@ namespace Tenkai.UStickies
         public static void MoveDuringDrag(Scene scene, SceneNoteDatabase database, SceneNote note, Vector3 position)
         {
             note.SetPosition(position);
+            MarkChangedDuringDrag(scene, database);
+        }
+
+        public static void SetViewOffsetDuringDrag(
+            Scene scene,
+            SceneNoteDatabase database,
+            SceneNote note,
+            Vector2 offset)
+        {
+            note.SetViewOffset(offset);
+            MarkChangedDuringDrag(scene, database);
+        }
+
+        private static void MarkChangedDuringDrag(Scene scene, SceneNoteDatabase database)
+        {
             EditorUtility.SetDirty(database);
             EditorSceneManager.MarkSceneDirty(scene);
             changed?.Invoke();

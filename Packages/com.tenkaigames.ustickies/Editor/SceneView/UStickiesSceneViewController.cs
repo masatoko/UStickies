@@ -23,6 +23,8 @@ namespace Tenkai.UStickies
         private static string _draggingNoteId;
         private static Plane _dragPlane;
         private static Vector3 _dragOffset;
+        private static bool _draggingViewOffset;
+        private static Vector2 _viewDragOffset;
 
 
 
@@ -69,7 +71,7 @@ namespace Tenkai.UStickies
                 .ToList();
             var iconRects = ordered.ToDictionary(
                 entry => entry.note.id,
-                entry => IconRect(entry.note.position));
+                entry => IconRect(entry.note.position, entry.note.viewOffset));
 
             HandleInput(sceneView, ordered, iconRects);
 
@@ -119,7 +121,11 @@ namespace Tenkai.UStickies
                 if (hit.note != null)
                 {
                     SceneNoteSelection.Select(hit.note.id);
-                    if (evt.clickCount >= 2)
+                    if (evt.control || evt.command)
+                    {
+                        BeginViewOffsetDrag(hit, evt.mousePosition);
+                    }
+                    else if (evt.clickCount >= 2)
                     {
                         UStickiesNoteEditorWindow.Open(hit.scene, hit.note, false);
                     }
@@ -141,7 +147,16 @@ namespace Tenkai.UStickies
             if (evt.type == EventType.MouseDrag && evt.button == 0 && !string.IsNullOrEmpty(_draggingNoteId))
             {
                 var hit = entries.FirstOrDefault(entry => entry.note.id == _draggingNoteId);
-                if (hit.note != null && TryProjectToDragPlane(evt.mousePosition, out var position))
+                if (hit.note != null && _draggingViewOffset)
+                {
+                    SceneNoteMutationService.SetViewOffsetDuringDrag(
+                        hit.scene,
+                        hit.database,
+                        hit.note,
+                        evt.mousePosition + _viewDragOffset);
+                    evt.Use();
+                }
+                else if (hit.note != null && TryProjectToDragPlane(evt.mousePosition, out var position))
                 {
                     SceneNoteMutationService.MoveDuringDrag(
                         hit.scene,
@@ -155,6 +170,7 @@ namespace Tenkai.UStickies
             if (evt.rawType == EventType.MouseUp && evt.button == 0)
             {
                 _draggingNoteId = null;
+                _draggingViewOffset = false;
             }
         }
 
@@ -308,11 +324,20 @@ namespace Tenkai.UStickies
         private static void BeginDrag(SceneView sceneView, SceneNoteEntry entry, Vector2 mousePosition)
         {
             _draggingNoteId = entry.note.id;
+            _draggingViewOffset = false;
             _dragPlane = new Plane(sceneView.camera.transform.forward, entry.note.position);
             _dragOffset = TryProjectToDragPlane(mousePosition, out var hit)
                 ? entry.note.position - hit
                 : Vector3.zero;
             Undo.RecordObject(entry.database, "Move UStickies Note");
+        }
+
+        private static void BeginViewOffsetDrag(SceneNoteEntry entry, Vector2 mousePosition)
+        {
+            _draggingNoteId = entry.note.id;
+            _draggingViewOffset = true;
+            _viewDragOffset = entry.note.viewOffset - mousePosition;
+            Undo.RecordObject(entry.database, "Move UStickies Note View Offset");
         }
 
         private static bool TryProjectToDragPlane(Vector2 mousePosition, out Vector3 position)
@@ -421,9 +446,9 @@ namespace Tenkai.UStickies
             return ray.GetPoint(Mathf.Max(0.1f, pivotDistance));
         }
 
-        private static Rect IconRect(Vector3 position)
+        private static Rect IconRect(Vector3 position, Vector2 viewOffset)
         {
-            var guiPosition = HandleUtility.WorldToGUIPoint(position);
+            var guiPosition = HandleUtility.WorldToGUIPoint(position) + viewOffset;
             return new Rect(
                 guiPosition.x - IconSize * 0.5f,
                 guiPosition.y - IconSize * 0.5f,

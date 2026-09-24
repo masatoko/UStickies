@@ -16,6 +16,7 @@ namespace Tenkai.UStickies
         [SerializeField] private bool _done;
         [SerializeField] private bool _pinned;
         [SerializeField] private Vector3 _worldPosition;
+        [SerializeField] private Vector2 _viewOffset;
         [SerializeField] private GameObject _target;
         [SerializeField] private bool _isBound;
         [SerializeField] private bool _missingTargetNotified;
@@ -33,6 +34,7 @@ namespace Tenkai.UStickies
         public long createdAtUtcTicks => _createdAtUtcTicks;
         public long registrationOrder => _registrationOrder;
         public Vector3 position => isBound ? _target.transform.position : _worldPosition;
+        public Vector2 viewOffset => _viewOffset;
 
         public static SceneNote Create(
             Vector3 position,
@@ -62,6 +64,7 @@ namespace Tenkai.UStickies
             _categoryId = edit.categoryId;
             _done = edit.done;
             _pinned = edit.pinned;
+            _viewOffset = edit.viewOffset;
 
             if (edit.target != null)
             {
@@ -97,6 +100,9 @@ namespace Tenkai.UStickies
 
             _worldPosition = position;
         }
+
+        public void SetViewOffset(Vector2 offset) =>
+            _viewOffset = offset;
 
         public void SetDone(bool value) =>
             _done = value;
@@ -148,19 +154,22 @@ namespace Tenkai.UStickies
         public readonly bool done;
         public readonly bool pinned;
         public readonly GameObject target;
+        public readonly Vector2 viewOffset;
 
         public SceneNoteEdit(
             string body,
             string categoryId,
             bool done,
             bool pinned,
-            GameObject target)
+            GameObject target,
+            Vector2 viewOffset)
         {
             this.body = body;
             this.categoryId = categoryId;
             this.done = done;
             this.pinned = pinned;
             this.target = target;
+            this.viewOffset = viewOffset;
         }
     }
 }

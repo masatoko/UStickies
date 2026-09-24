@@ -23,6 +23,7 @@ namespace Tenkai.UStickies
         private Toggle _doneField;
         private Toggle _pinnedField;
         private ObjectField _targetField;
+        private Vector2Field _viewOffsetField;
         private readonly List<string> _categoryIds = new();
 
         public static void Open(Scene scene, SceneNote note, bool isNew)
@@ -33,7 +34,7 @@ namespace Tenkai.UStickies
             window._isNew = isNew;
             window._saved = false;
             window.titleContent = new GUIContent(isNew ? "New USticky" : "Edit USticky");
-            window.minSize = new Vector2(360f, isNew ? 245f : 330f);
+            window.minSize = new Vector2(360f, isNew ? 275f : 360f);
             window.maxSize = new Vector2(620f, 720f);
             window.ShowAuxWindow();
             window.Focus();
@@ -64,6 +65,12 @@ namespace Tenkai.UStickies
             panel.Add(_bodyField);
 
             BuildCategoryField(note, panel);
+
+            _viewOffsetField = new Vector2Field("View Offset")
+            {
+                value = note.viewOffset
+            };
+            panel.Add(_viewOffsetField);
 
             if (!_isNew)
             {
@@ -144,7 +151,8 @@ namespace Tenkai.UStickies
                 _categoryIds[categoryIndex],
                 _isNew ? note.done : _doneField.value,
                 _isNew ? note.pinned : _pinnedField.value,
-                target);
+                target,
+                _viewOffsetField.value);
             SceneNoteMutationService.Apply(scene, database, note, edit);
             _saved = true;
             Close();

@@ -26,6 +26,7 @@ Unity Editor上で、Scene内の任意位置またはGameObjectにノートを�
 - Done状態
 - Pin状態
 - ワールド座標
+- Scene View上の表示オフセット
 - 紐づけ先GameObject
 - GameObjectとの紐づけ状態
 - 作成日時
@@ -36,7 +37,8 @@ Unity Editor上で、Scene内の任意位置またはGameObjectにノートを�
 - 位置固定ノート：保存したワールド座標
 - GameObject紐づけノート：対象GameObjectのTransform位置
 
-初期バージョンではGameObjectからの表示位置オフセットを持たない。
+各ノートは、ワールド座標を変更せずにScene View上の表示位置だけをずらす表示オフセットを持つ。
+表示オフセットはGUIポイント単位の2次元座標で、Xは右方向、Yは下方向を正とする。
 
 ### GameObject削除時
 
@@ -99,6 +101,8 @@ Unity Editor上で、Scene内の任意位置またはGameObjectにノートを�
 - Pin
 - GameObjectの紐づけ先
 
+新規作成時と既存ノートの編集時の両方で、Scene View上の表示オフセットを編集できる。
+
 別SceneのGameObjectは紐づけ先に指定できない。
 
 ## カテゴリ
@@ -156,6 +160,7 @@ Unity Editor上で、Scene内の任意位置またはGameObjectにノートを�
 - Escapeまたはノート以外の左クリックで選択を解除する。
 - 位置固定ノートは `Shift + 左ドラッグ` で移動できる。
 - GameObject紐づけノートはドラッグ移動できない。
+- `Ctrl/Cmd + 左ドラッグ` で、ノート種別に関係なくScene View上の表示オフセットを変更できる。
 - Scene ViewのオーバーレイまたはNotes Windowの `Visible` で、ノート表示全体を切り替えられる。
 
 ## Scene Notes Window
@@ -234,6 +239,7 @@ Done状態は並び順に影響しない。
 - ノート追加
 - ノート削除
 - 位置固定ノートの移動
+- Scene View上の表示オフセット変更
 - 本文変更
 - カテゴリ変更
 - Done状態変更
