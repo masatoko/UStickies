@@ -25,6 +25,8 @@ namespace Tenkai.UStickies
             public static readonly GUIContent MaximumWidth = new("Maximum Width");
             public static readonly GUIContent MaximumHeight = new("Maximum Height");
             public static readonly GUIContent TextColor = new("Text Color");
+            public static readonly GUIContent StickyColor = new("Sticky Color");
+            public static readonly GUIContent Opacity = new("Opacity");
             public static readonly GUIContent Categories = new("Categories");
         }
     }

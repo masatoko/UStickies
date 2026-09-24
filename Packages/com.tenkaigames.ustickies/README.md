@@ -161,6 +161,14 @@ Scene View上で `Shift + 左ドラッグ` すると位置を変更できる。
 - **ノートを削除**
   Notes Windowでノートを選択して `Delete` を押す。選択中の行の右クリックメニューからも削除できる。
 
+## 付箋の外観設定
+
+`Edit > Project Settings > UStickies` の `Note Card Appearance` から設定する。
+
+- `Use Custom Sticky Color` がOFFの場合は各ノートのカテゴリ色、ONの場合はプロジェクト共通の `Sticky Color` を背景に使用する。
+- `Opacity` は背景色とは独立して設定でき、プロジェクト全体で共有される。
+- 最大サイズと文字色は同じ画面から設定するが、ユーザーごとに保存される。
+
 ## カテゴリの管理
 
 カテゴリはプロジェクト全体で共有される。`Edit > Project Settings > UStickies` から設定画面を開く。

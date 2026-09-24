@@ -17,7 +17,6 @@ namespace Tenkai.UStickies
         private const float IconSize = 28f;
         private const float CardPadding = 6f;
         private const float ScrollbarWidth = 16f;
-        private const float CardBackgroundAlpha = 0.35f;
 
         private static readonly Dictionary<string, Vector2> CardScrollPositions = new();
         private static readonly Dictionary<string, Rect> LastCardRects = new();
@@ -217,10 +216,18 @@ namespace Tenkai.UStickies
 
             var text = string.IsNullOrEmpty(note.body) ? "空のノート" : note.body;
             var content = new GUIContent(text);
-            var categoryColor = UStickiesProjectSettings.instance.Resolve(note.categoryId).color;
+            var projectSettings = UStickiesProjectSettings.instance;
+            var categoryColor = projectSettings.Resolve(note.categoryId).color;
+            var backgroundColor = projectSettings.useCustomCardBackgroundColor
+                ? projectSettings.cardBackgroundColor
+                : categoryColor;
             EditorGUI.DrawRect(
                 rect,
-                new Color(categoryColor.r, categoryColor.g, categoryColor.b, CardBackgroundAlpha));
+                new Color(
+                    backgroundColor.r,
+                    backgroundColor.g,
+                    backgroundColor.b,
+                    projectSettings.cardBackgroundOpacity));
 
             var viewportRect = new Rect(
                 rect.x + CardPadding,

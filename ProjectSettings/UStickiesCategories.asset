@@ -26,3 +26,7 @@ MonoBehaviour:
     _color: {r: 0.9, g: 0.25, b: 0.23, a: 1}
     _builtIn: 1
   _replacements: []
+  _useCustomCardBackgroundColor: 1
+  _cardBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
+  _cardBackgroundOpacity: 0.186
+  _hasCardBackgroundOpacity: 1

@@ -15,9 +15,14 @@ namespace Tenkai.UStickies
         public const string NoteCategoryId = "ustickies.category.note";
         public const string TodoCategoryId = "ustickies.category.todo";
         public const string BugCategoryId = "ustickies.category.bug";
+        public const float DefaultCardBackgroundOpacity = 0.35f;
 
         [SerializeField] private List<UStickiesCategory> _categories = new();
         [SerializeField] private List<UStickiesCategoryReplacement> _replacements = new();
+        [SerializeField] private bool _useCustomCardBackgroundColor;
+        [SerializeField] private Color _cardBackgroundColor = Color.white;
+        [SerializeField] private float _cardBackgroundOpacity;
+        [SerializeField] private bool _hasCardBackgroundOpacity;
 
         public static event Action changed;
 
@@ -36,6 +41,11 @@ namespace Tenkai.UStickies
         }
 
         public string defaultCategoryId => NoteCategoryId;
+        public bool useCustomCardBackgroundColor => _useCustomCardBackgroundColor;
+        public Color cardBackgroundColor => _cardBackgroundColor.a > 0f ? _cardBackgroundColor : Color.white;
+        public float cardBackgroundOpacity => _hasCardBackgroundOpacity
+            ? Mathf.Clamp01(_cardBackgroundOpacity)
+            : DefaultCardBackgroundOpacity;
 
         public UStickiesCategory Resolve(string categoryId)
         {
@@ -120,6 +130,19 @@ namespace Tenkai.UStickies
             _categories.RemoveAt(sourceIndex);
             _categories.Insert(destinationIndex, category);
             Commit();
+        }
+
+        public void SetCardBackgroundAppearance(bool useCustomColor, Color color, float opacity)
+        {
+            Undo.RecordObject(this, "Edit UStickies Card Appearance");
+            _useCustomCardBackgroundColor = useCustomColor;
+            _cardBackgroundColor = new Color(color.r, color.g, color.b, 1f);
+            _cardBackgroundOpacity = Mathf.Clamp01(opacity);
+            _hasCardBackgroundOpacity = true;
+            EditorUtility.SetDirty(this);
+            Save(true);
+            changed?.Invoke();
+            SceneNoteMutationService.NotifyViewChanged();
         }
 
         private void EnsureDefaults()

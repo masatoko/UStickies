@@ -17,6 +17,9 @@ namespace Tenkai.UStickies
         private readonly FloatField _maximumHeightField;
         private readonly Toggle _useCustomTextColorToggle;
         private readonly ColorField _textColorField;
+        private readonly Toggle _useCustomBackgroundColorToggle;
+        private readonly ColorField _backgroundColorField;
+        private readonly Slider _backgroundOpacityField;
         private readonly ListView _categoryList;
 
         public UStickiesSettingsView()
@@ -66,10 +69,39 @@ namespace Tenkai.UStickies
             _textColorField.RegisterValueChangedCallback(_ => SaveCardAppearance());
             appearancePanel.Add(_textColorField);
 
+            var projectSettings = UStickiesProjectSettings.instance;
+            _useCustomBackgroundColorToggle = new Toggle("Use Custom Sticky Color")
+            {
+                value = projectSettings.useCustomCardBackgroundColor
+            };
+            _useCustomBackgroundColorToggle.RegisterValueChangedCallback(evt =>
+            {
+                _backgroundColorField.SetEnabled(evt.newValue);
+                SaveCardBackgroundAppearance();
+            });
+            appearancePanel.Add(_useCustomBackgroundColorToggle);
+
+            _backgroundColorField = new ColorField("Sticky Color")
+            {
+                showAlpha = false,
+                value = projectSettings.cardBackgroundColor
+            };
+            _backgroundColorField.SetEnabled(projectSettings.useCustomCardBackgroundColor);
+            _backgroundColorField.RegisterValueChangedCallback(_ => SaveCardBackgroundAppearance());
+            appearancePanel.Add(_backgroundColorField);
+
+            _backgroundOpacityField = new Slider("Opacity", 0f, 1f)
+            {
+                showInputField = true,
+                value = projectSettings.cardBackgroundOpacity
+            };
+            _backgroundOpacityField.RegisterValueChangedCallback(_ => SaveCardBackgroundAppearance());
+            appearancePanel.Add(_backgroundOpacityField);
+
             var limits = new HelpBox(
                 $"Width: {UStickiesUserSettings.MinimumCardWidth:0}-{UStickiesUserSettings.MaximumCardWidthLimit:0} px, "
                 + $"Height: {UStickiesUserSettings.MinimumCardHeight:0}-{UStickiesUserSettings.MaximumCardHeightLimit:0} px. "
-                + "These values are stored per user.",
+                + "Size and text color are stored per user. Sticky color and opacity are shared with the project.",
                 HelpBoxMessageType.Info);
             appearancePanel.Add(limits);
             Add(appearancePanel);
@@ -118,14 +150,14 @@ namespace Tenkai.UStickies
 
             RegisterCallback<AttachToPanelEvent>(_ =>
             {
-                UStickiesProjectSettings.changed += RefreshCategories;
-                Undo.undoRedoPerformed += RefreshCategories;
-                RefreshCategories();
+                UStickiesProjectSettings.changed += RefreshProjectSettings;
+                Undo.undoRedoPerformed += RefreshProjectSettings;
+                RefreshProjectSettings();
             });
             RegisterCallback<DetachFromPanelEvent>(_ =>
             {
-                UStickiesProjectSettings.changed -= RefreshCategories;
-                Undo.undoRedoPerformed -= RefreshCategories;
+                UStickiesProjectSettings.changed -= RefreshProjectSettings;
+                Undo.undoRedoPerformed -= RefreshProjectSettings;
             });
         }
 
@@ -154,6 +186,24 @@ namespace Tenkai.UStickies
             _useCustomTextColorToggle.SetValueWithoutNotify(settings.useCustomCardTextColor);
             _textColorField.SetValueWithoutNotify(settings.cardTextColor);
             _textColorField.SetEnabled(settings.useCustomCardTextColor);
+        }
+
+        private void SaveCardBackgroundAppearance()
+        {
+            UStickiesProjectSettings.instance.SetCardBackgroundAppearance(
+                _useCustomBackgroundColorToggle.value,
+                _backgroundColorField.value,
+                _backgroundOpacityField.value);
+            RefreshCardBackgroundAppearance();
+        }
+
+        private void RefreshCardBackgroundAppearance()
+        {
+            var settings = UStickiesProjectSettings.instance;
+            _useCustomBackgroundColorToggle.SetValueWithoutNotify(settings.useCustomCardBackgroundColor);
+            _backgroundColorField.SetValueWithoutNotify(settings.cardBackgroundColor);
+            _backgroundColorField.SetEnabled(settings.useCustomCardBackgroundColor);
+            _backgroundOpacityField.SetValueWithoutNotify(settings.cardBackgroundOpacity);
         }
 
         private VisualElement MakeCategoryRow()
@@ -260,6 +310,12 @@ namespace Tenkai.UStickies
             _viewCategories = new List<UStickiesCategory>(UStickiesProjectSettings.instance.categories);
             _categoryList.itemsSource = _viewCategories;
             _categoryList.Rebuild();
+        }
+
+        private void RefreshProjectSettings()
+        {
+            RefreshCardBackgroundAppearance();
+            RefreshCategories();
         }
     }
 }
